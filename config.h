@@ -132,7 +132,7 @@ typedef uint8_t bool;
 #define LEFT_LED_OUTPUT_OUT_REG    VPORTB.OUT
 #define LEFT_LED_OUTPUT_PIN        4
 
-#elif defined(SOTA5) || defined(SOTA7)
+#elif defined(SOTA5) || defined(SOTA7) || defined(SUPERSOTA7)
 
 // The number of band relays
 #define NUM_RELAYS 5
@@ -553,6 +553,48 @@ typedef uint8_t bool;
 #define TX_ENABLED_10M     true
 #define QUICK_VFO_10M      true
 
+#elif defined(SUPERSOTA7)
+
+#define RELAY_STATE_160M   3
+#define TX_ENABLED_160M    false
+#define QUICK_VFO_160M     false
+
+#define RELAY_STATE_80M    3
+#define TX_ENABLED_80M     false
+#define QUICK_VFO_80M      false
+
+#define RELAY_STATE_60M    3
+#define TX_ENABLED_60M     false
+#define QUICK_VFO_60M      false
+
+#define RELAY_STATE_40M    3
+#define TX_ENABLED_40M     true
+#define QUICK_VFO_40M      true
+
+#define RELAY_STATE_30M    0
+#define TX_ENABLED_30M     true
+#define QUICK_VFO_30M      true
+
+#define RELAY_STATE_20M    1
+#define TX_ENABLED_20M     true
+#define QUICK_VFO_20M      true
+
+#define RELAY_STATE_17M    4
+#define TX_ENABLED_17M     true
+#define QUICK_VFO_17M      true
+
+#define RELAY_STATE_15M    4
+#define TX_ENABLED_15M     true
+#define QUICK_VFO_15M      true
+
+#define RELAY_STATE_12M    2
+#define TX_ENABLED_12M     true
+#define QUICK_VFO_12M      true
+
+#define RELAY_STATE_10M    2
+#define TX_ENABLED_10M     true
+#define QUICK_VFO_10M      true
+
 #else
 
 #define RELAY_STATE_160M   0
@@ -618,7 +660,7 @@ typedef uint8_t bool;
 #define SIDETONE_PERIOD (F_CPU/CLOCK_DIV/CW_FREQUENCY)
 
 // Whether or not to have variable sidetone volume
-#ifdef SUPERSOTA4
+#if defined(SUPERSOTA4) || defined(SUPERSOTA7)
 #define VARIABLE_SIDETONE_VOLUME
 #define MIN_SIDETONE_PWM 2
 #define MAX_SIDETONE_PWM 99
