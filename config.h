@@ -211,11 +211,11 @@ typedef uint8_t bool;
 
 #define I2C_CLOCK_RATE 100000
 
-// Default, min and max BFO frequency
+// Default, min and max intermediate frequency
 // 0 means direct conversion
-#define DEFAULT_BFO_FREQ	0UL
-#define MIN_BFO_FREQUENCY	0UL
-#define MAX_BFO_FREQUENCY	99999999UL
+#define DEFAULT_INTERMEDIATE_FREQ	0UL
+#define MIN_INTERMEDIATE_FREQUENCY	0UL
+#define MAX_INTERMEDIATE_FREQUENCY	99999999UL
 
 // Define to use the alternative pins (PA1, PA2) instead
 // of the standard pins (PB2,PB3)
@@ -357,8 +357,8 @@ typedef uint8_t bool;
 // accurately. TX uses the third clock, the one not used for RX.
 #define NUM_CLOCKS 3
 #define RX_CLOCK_A 0
-#define RX_CLOCK_B (BFOFrequency == 0 ? 1 : 2)
-#define TX_CLOCK   (BFOFrequency == 0 ? 2 : 1)
+#define RX_CLOCK_B (intermediateFrequency == 0 ? 1 : 2)
+#define TX_CLOCK   (intermediateFrequency == 0 ? 2 : 1)
 
 // The minimum and maximum crystal frequencies in the setting menu
 // Have to allow for adjusting above or below actual valid crystal range
