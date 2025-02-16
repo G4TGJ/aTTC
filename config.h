@@ -40,6 +40,15 @@ typedef uint8_t bool;
 
 // I/O definitions
 
+// The number of rotary controls
+#define NUM_ROTARIES 1
+#define MAIN_ROTARY 0
+
+// Number of buttons (in addition to those on rotary controls)
+#define NUM_PUSHBUTTONS 2
+#define RIGHT_BUTTON    0
+#define LEFT_BUTTON     1
+
 // Pushbuttons to use the ADC to save pins
 #define ANALOGUE_BUTTONS
 
@@ -109,6 +118,9 @@ typedef uint8_t bool;
 #define RX_ENABLE_DIR_REG     VPORTA.DIR
 #define RX_ENABLE_OUT_REG     VPORTA.OUT
 #define RX_ENABLE_PIN         7
+
+// By default we are using CW mode
+#define DEFAULT_TRX_MODE   0
 
 #ifdef SOTA2
 
@@ -210,6 +222,8 @@ typedef uint8_t bool;
 #define SI_XTAL_LOAD_CAP SI_XTAL_LOAD_8PF
 
 #define I2C_CLOCK_RATE 100000
+
+#define CLOCK_DISABLE_STATE 0x00
 
 // Default, min and max intermediate frequency
 // 0 means direct conversion
@@ -662,11 +676,11 @@ typedef uint8_t bool;
 // Whether or not to have variable sidetone volume
 #if defined(SUPERSOTA4) || defined(SUPERSOTA7)
 #define VARIABLE_SIDETONE_VOLUME
-#define MIN_SIDETONE_PWM 2
-#define MAX_SIDETONE_PWM 99
-#define SIDETONE_PWM_INC 1
+#define MIN_SIDETONE_VOLUME 2
+#define MAX_SIDETONE_VOLUME 99
+#define SIDETONE_VOLUME_INC 1
 
-#define DEFAULT_SIDETONE_PWM 5
+#define DEFAULT_SIDETONE_VOLUME 5
 
 #else
 
@@ -675,4 +689,6 @@ typedef uint8_t bool;
 
 #endif
 
+#define INTERMEDIATE_FREQUENCY 0
+#define LCD_DISPLAY
 #endif /* CONFIG_H_ */

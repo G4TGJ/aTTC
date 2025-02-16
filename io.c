@@ -22,6 +22,8 @@
 // easy to change the hardware e.g. we have the option to
 // connect several inputs to a single ADC pin
 
+static uint8_t sidetoneVolume = DEFAULT_SIDETONE_VOLUME;
+
 
 #ifdef VPORTC
 
@@ -149,7 +151,7 @@ void ioInit()
     // We will get the clock from TCA0 (the millisecond timer) which we
     // divided down enough so that we can get an audible frequency
     TCB1.CCMPL = SIDETONE_PERIOD;
-    TCB1.CCMPH = DEFAULT_SIDETONE_PWM;
+    TCB1.CCMPH = DEFAULT_SIDETONE_VOLUME;
     TCB1.CTRLB = TCB_CNTMODE_2_bm | TCB_CNTMODE_1_bm | TCB_CNTMODE_0_bm;
     TCB1.CTRLA = TCB_CLKSEL_1_bm | TCB_ENABLE_bm;
     PORTA.PIN3CTRL &= PORT_PULLUPEN_bm;
@@ -159,14 +161,25 @@ void ioInit()
 }
 
 #ifdef VARIABLE_SIDETONE_VOLUME
-void ioWriteSidetoneDutyCycle( uint8_t duty )
+void ioSetSidetoneVolume( uint8_t vol )
 {
-     TCB1.CCMPH = duty;   
+    if( vol >= MIN_SIDETONE_VOLUME && vol <= MAX_SIDETONE_VOLUME )
+    {
+         TCB1.CCMPH = vol;
+         sidetoneVolume = vol;
+    }
+}
+
+uint8_t ioGetSidetoneVolume( void )
+{
+    return sidetoneVolume;
 }
 #endif
 
-void ioReadRotary( bool *pbA, bool *pbB, bool *pbSw )
+void ioReadRotary( int rotaryNum, bool *pbA, bool *pbB, bool *pbSw )
 {
+    // Only one rotary
+    (void) rotaryNum;
     *pbA  = !(ROTARY_ENCODER_A_IN_REG & (1 << ROTARY_ENCODER_A_PIN));
     *pbB  = !(ROTARY_ENCODER_B_IN_REG & (1 << ROTARY_ENCODER_B_PIN));
 #ifdef ANALOGUE_BUTTONS
@@ -177,7 +190,7 @@ void ioReadRotary( bool *pbA, bool *pbB, bool *pbSw )
 }
 
 // Read the left and right pushbuttons
-bool ioReadLeftButton()
+static bool ioReadLeftButton()
 {
 #ifdef SOTA2
     // SOTA rig does not have a left or right button
@@ -191,7 +204,7 @@ bool ioReadLeftButton()
 #endif
 }
 
-bool ioReadRightButton()
+static bool ioReadRightButton()
 {
 #ifdef SOTA2
 // SOTA rig does not have a left or right button
@@ -203,6 +216,23 @@ return false;
     return !(RIGHT_IN_REG & (1 << RIGHT_PIN));
 #endif
 #endif
+}
+
+bool ioReadButton( uint8_t button )
+{
+    switch( button )
+    {
+        case RIGHT_BUTTON:
+            return ioReadRightButton();
+            break;
+            
+        case LEFT_BUTTON:
+            return ioReadLeftButton();
+            break;
+        
+        default:
+            return false;
+    }
 }
 
 // Read the morse dot and dash paddles
