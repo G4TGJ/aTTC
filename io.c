@@ -22,8 +22,9 @@
 // easy to change the hardware e.g. we have the option to
 // connect several inputs to a single ADC pin
 
+#ifdef VARIABLE_SIDETONE_VOLUME
 static uint8_t sidetoneVolume = DEFAULT_SIDETONE_VOLUME;
-
+#endif
 
 #ifdef VPORTC
 

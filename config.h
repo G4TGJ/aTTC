@@ -685,10 +685,14 @@ typedef uint8_t bool;
 #else
 
 // Default sidetone volume PWM duty cycle
-#define DEFAULT_SIDETONE_PWM (SIDETONE_PERIOD/50)
+#define DEFAULT_SIDETONE_VOLUME (SIDETONE_PERIOD/50)
 
 #endif
 
 #define INTERMEDIATE_FREQUENCY 0
+
+#if defined(FIVEBAND) || defined(SOTA5) || defined(SOTA7) || defined(SUPERSOTA4) || defined(SUPERSOTA7)
 #define LCD_DISPLAY
+#endif
+
 #endif /* CONFIG_H_ */
